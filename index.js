@@ -1,10 +1,9 @@
 /**
- * Cloud Function.
+ * HTTP Cloud Function.
  *
- * @param {object} event The Cloud Functions event.
- * @param {function} The callback function.
+ * @param {Object} req Cloud Function request context.
+ * @param {Object} res Cloud Function response context.
  */
-exports.helloWorld = function helloWorld (event, callback) {
-  console.log(`My Cloud Function: ${event.data.message}`);
-  callback();
+exports.helloHttp = function helloHttp (req, res) {
+  res.send(`Hello ${req.body.name || 'World'}!`);
 };
