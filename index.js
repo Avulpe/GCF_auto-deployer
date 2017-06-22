@@ -5,5 +5,5 @@
  * @param {Object} res Cloud Function response context.
  */
 exports.helloHttp = function helloHttp (req, res) {
-  res.send(`Hello ${req.body.name || 'World'}!Wellcome!`);
+  res.send(`Hello ${req.body.name || 'World'}! Wellcome to git webhooks!`);
 };
