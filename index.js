@@ -166,7 +166,7 @@ function deployFunction(
  * @param {Object} req Cloud Function request context.
  * @param {Object} res Cloud Function response context.
  */
-exports.deployHttp = function deployHttp(req, res) {
+exports.gitHubAutoDeployer = function gitHubAutoDeployer(req, res) {
   /*
    * Parse the url in order to get the required information.
    *
