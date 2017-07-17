@@ -1,8 +1,14 @@
 {
-  "url":"https://github.com/Avulpe/CFG-helloWorld/blob/master/index.js",
-  "projectName":"anca-functions",
   "stageBucket":"a-tutorial",
   "location":"us-central1",
-  "functionName":"helloHttp"
+  "deployments": [
+     {
+       "functionName":"helloHttp",
+       "path":"CFG-helloWorld" 
+     },
+     {
+       "functionName":"helloHttp2",
+       "path":"GCF_test/examples/helloWorld" 
+     }
+  ]
 }
-
