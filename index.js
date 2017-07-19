@@ -3,6 +3,7 @@ const zipFolder = require('zip-folder');
 const randomstring = require('randomstring');
 const Gcs = require('@google-cloud/storage');
 const google = require('googleapis');
+const crypto = require('crypto');
 
 /*
  * config.json contain all the required information for code running:
@@ -168,6 +169,30 @@ function deployFunction(
   });
 }
 
+/**
+ * Validates the request.
+ * See https://developer.github.com/webhooks/securing.
+ *
+ * @param {object} req
+ */
+function validateRequest (req) {
+  return Promise.resolve()
+    .then(() => {
+      const digest = crypto
+        .createHmac('sha1', config.secretToken)
+        .update(JSON.stringify(req.body))
+        .digest('hex');
+
+      if (req.headers['x-hub-signature'] !== `sha1=${digest}`) {
+        const error = new Error('Unauthorized');
+        error.statusCode = 403;
+        throw error;
+      } else {
+        console.log('Request validated.');
+      }
+    });
+}
+
 /** The entire proceess starting from cloning the repository and ending with
  * deploying the function.
  *
@@ -185,6 +210,7 @@ exports.deployHttp = function deployHttp(req, res) {
    */
   var obj = JSON.parse(JSON.stringify(req.body));
   var filePath = 'tmp/' + obj.repository.name;
+  validateRequest(req);
 
   downloadRepo(filePath, obj, res);
 };
